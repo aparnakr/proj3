@@ -12,16 +12,16 @@
 
  
 
-struct flightSys {
-  struct airport current;
-  struct airport* next;
+typedef struct {
+   airport current;
+   flightSys *next;
 
-};
+}flightSys;
 
-struct airport {
+typedef struct{
 char* airport_name;
 schedule airport_schedule;
-};
+}airport ;
 
 typedef struct{
   char* destination_name;
@@ -47,8 +47,9 @@ static void allocation_failed() {
  */
 flightSys_t* createSystem() {
     // Replace this line with your code
+flightSys new_flight_sys = flightSys(NULL,NULL);
   
-    return NULL;
+    return new_flight_sys;
 }
 
 
@@ -66,6 +67,7 @@ void deleteSystem(flightSys_t* s) {
  */
 void addAirport(flightSys_t* s, char* name) {
     // Replace this line with your code
+  
 }
 
 
