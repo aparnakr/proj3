@@ -10,13 +10,27 @@
 #include "flights.h"
 #include "timeHM.h"
 
+ 
+
 struct flightSys {
+  struct airport current;
+  struct airport* next;
 
 };
 
 struct airport {
-
+char* airport_name;
+schedule airport_schedule;
 };
+
+typedef struct{
+  char* destination_name;
+  timeHM_t departure;
+  timeHM_t arrival;
+  int cost_of_flight;
+  schedule * next_flight;
+
+}schedule;
 
 /*
    This should be called if memory allocation failed.
@@ -33,6 +47,7 @@ static void allocation_failed() {
  */
 flightSys_t* createSystem() {
     // Replace this line with your code
+  
     return NULL;
 }
 
