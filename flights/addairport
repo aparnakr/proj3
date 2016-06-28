@@ -1,0 +1,23 @@
+if (src != NULL) {
+      flights *new_flight = (flights*) malloc(sizeof(flights));
+      if(new_flight == NULL){
+        allocation_failed();
+      }
+      new_flight->destination_name = malloc(sizeof(dst));
+      new_flight->departure = malloc(sizeof(departure_time));
+      new_flight->arrival = malloc(sizeof(arrival_time));
+      //new_flight->cost_of_flight = malloc(sizeof(cost));
+      strcpy(new_flight->destination_name, dst->airport_name);
+      new_flight->departure = departure_time;
+      newflight->arrival = arrival_time;
+      new_flight->cost_of_flight = cost;
+      flights * pointer = src->start_flight;
+      if (pointer == NULL) {
+        src->start_flight = new_flight;
+      } else {
+        while (pointer->next_flight != NULL) {
+          pointer = pointer->next_flight;
+      }
+      pointer->next_flight = new_flight;
+    }
+  }
