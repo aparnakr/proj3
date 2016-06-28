@@ -10,23 +10,25 @@
 #include "flights.h"
 #include "timeHM.h"
 
-typedef struct  {
+ struct flight{
   char * destination_name;
   timeHM_t departure;
   timeHM_t arrival;
   int cost_of_flight;
-  flights * next_flight;
-}flights;
-
- typedef struct {
+  struct flight * next_flight;
+};
+typedef struct flight flights;
+  struct airports{
     char * airport_name;
-    airport * next_airport;
+    struct airports * next_airport;
     flights * start_flight;
-   }airport;
+   };
+typedef struct airports airport;
 
-typedef struct {
-   airport * start_airport;
-}flightSys_t;
+struct {
+   airport *start_airport;
+}flightSys;
+typedef struct flightSys flightSys_t;
 
 
 /*
@@ -44,11 +46,11 @@ static void allocation_failed() {
  */
 flightSys_t* createSystem() {
     // Replace this line with your code
-    flightSys_t * new_flight_sys = (* flightSys_t) malloc(sizeof(flightSys_t));
+    flightSys_t * new_flight_sys = (flightSys_t *) malloc(sizeof(flightSys_t *));
     if(new_flight_sys == NULL){
       allocation_failed();
     }
-    new_flight_sys->start_airport = NULL;
+    (airport *)new_flight_sys->start_airport = NULL;
   
     return new_flight_sys;
 }
@@ -69,7 +71,7 @@ void deleteSystem(flightSys_t* s) {
 void addAirport(flightSys_t* s, char* name) {
     // Replace this line with your code
   if(s!= NULL){
-    airport * new_airport = (* airport) malloc(sizeof(airport));
+    airport * new_airport = (airport *) malloc(sizeof(airport *));
     if(new_airport == NULL){
         allocation_failed();
     }
@@ -80,7 +82,7 @@ void addAirport(flightSys_t* s, char* name) {
     if(pointer == NULL){
       s->start_airport = new_airport;
     }else{
-      while(pointer->new_airport!=NULL){
+      while(pointer->next_airport!=NULL){
         pointer = pointer->next_airport;
       }
       pointer->next_airport = new_airport;
@@ -94,6 +96,7 @@ void addAirport(flightSys_t* s, char* name) {
    Returns a pointer to the airport with the given name.
    If the airport doesn't exist, return NULL.
  */
+
 airport_t* getAirport(flightSys_t* s, char* name) {
     // Replace this line with your code
     if(s != NULL && name != NULL){
@@ -119,8 +122,8 @@ void printAirports(flightSys_t* s) {
   if(s != NULL){
     airport * pointer = s->start_airport;
     while(pointer != NULL){
-      printf("%s",pointer->name);
-      printf("%s\n");
+      printf("%s",pointer->airport_name);
+      printf("\n");
       pointer = pointer->next_airport;
     }
   }
@@ -151,11 +154,11 @@ void printSchedule(airport_t* s) {
     flights * pointer = s->start_flight;
     printf("%s \n",s->airport_name);
     while(pointer != NULL){
-      printf("%s ",pointer->name);
-      printTime(pointer->departure);
-      printTime(pointer->arrival);
+      printf("%s ",pointer->destination_name);
+      printTime(&pointer->departure);
+      printTime(&pointer->arrival);
       printf("%d \n",pointer->cost_of_flight);
-      pointer = pointer->next_airport;
+      pointer = pointer->next_flight;
     }
   }
 
