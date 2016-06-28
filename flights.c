@@ -76,8 +76,16 @@ void addAirport(flightSys_t* s, char* name) {
     new_airport->airport_name = malloc(sizeof(name) + 1);
     new_airport->start_flight = NULL;
     strcpy(new_airport->airport_name, name);
-    new_airport->next_airport = s->start_airport;
-    s->start_airport = new_airport;
+
+    airport * pointer = s->start_airport;
+    if(pointer == NULL){
+      s->start_airport = new_airport;
+    }else{
+      while(pointer->new_airport!=NULL){
+        pointer = pointer->next_airport;
+      }
+      pointer->next_airport = new_airport;
+    }
   
   }
 }
