@@ -76,7 +76,6 @@ void addAirport(flightSys_t* s, char* name) {
     new_airport->airport_name = malloc(sizeof(name) + 1);
     new_airport->start_flight = NULL;
     strcpy(new_airport->airport_name, name);
-
     airport * pointer = s->start_airport;
     if(pointer == NULL){
       s->start_airport = new_airport;
@@ -120,7 +119,8 @@ void printAirports(flightSys_t* s) {
   if(s != NULL){
     airport * pointer = s->start_airport;
     while(pointer != NULL){
-      printf("%s \n",pointer->name);
+      printf("%s",pointer->name);
+      printf("%s\n");
       pointer = pointer->next_airport;
     }
   }
@@ -147,6 +147,15 @@ void addFlight(airport_t* src, airport_t* dst, timeHM_t* departure, timeHM_t* ar
  */
 void printSchedule(airport_t* s) {
     // Replace this line with your code
+    if(s != NULL){
+    flights * pointer = s->start_airport;
+    while(pointer != NULL){
+      printf("%s",pointer->name);
+      printf("%s\n");
+      pointer = pointer->next_airport;
+    }
+  }
+
 }
 
 
