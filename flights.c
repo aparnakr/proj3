@@ -148,10 +148,13 @@ void addFlight(airport_t* src, airport_t* dst, timeHM_t* departure, timeHM_t* ar
 void printSchedule(airport_t* s) {
     // Replace this line with your code
     if(s != NULL){
-    flights * pointer = s->start_airport;
+    flights * pointer = s->start_flight;
+    printf("%s \n",s->airport_name);
     while(pointer != NULL){
-      printf("%s",pointer->name);
-      printf("%s\n");
+      printf("%s ",pointer->name);
+      printTime(pointer->departure);
+      printTime(pointer->arrival);
+      printf("%d \n",pointer->cost_of_flight);
       pointer = pointer->next_airport;
     }
   }
