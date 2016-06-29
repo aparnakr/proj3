@@ -134,10 +134,30 @@ void printAirports(flightSys_t* s) {
    Adds a flight to src's schedule, stating a flight will leave to dst at departure time and arrive at arrival time.
  */
 void addFlight(airport_t* src, airport_t* dst, timeHM_t* departure, timeHM_t* arrival, int cost) {
-    // Replace this line with your code
-}
-
-
+    if (src != NULL) {
+      flight_t * new_flight = (flight_t *) malloc(sizeof(flight_t));
+      if(new_flight == NULL){
+        allocation_failed();
+      }
+      new_flight->destination_name = malloc(sizeof(dst->airport_name) + 1);
+      //new_flight->departure = malloc(sizeof(departure));
+      //new_flight->arrival = malloc(sizeof(arrival));
+      //new_flight->cost_of_flight = malloc(sizeof(cost));
+      strcpy(new_flight->destination_name, dst->airport_name);
+      new_flight->departure = * departure;
+      new_flight->arrival = * arrival;
+      new_flight->cost_of_flight = cost;
+      flight_t * pointer = src->start_flight;
+      if (pointer == NULL) {
+        src->start_flight = new_flight;
+      } else {
+        while (pointer->next_flight != NULL) {
+          pointer = pointer->next_flight;
+      }
+      pointer->next_flight = new_flight;
+      }
+    }
+  }
 /*
    Prints the schedule of flights of the given airport.
 
