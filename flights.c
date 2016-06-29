@@ -196,6 +196,32 @@ void printSchedule(airport_t* s) {
    Please use the function isAfter() from time.h when comparing two timeHM_t objects.
  */
 bool getNextFlight(airport_t* src, airport_t* dst, timeHM_t* now, timeHM_t* departure, timeHM_t* arrival, int* cost) {
-    // Replace this line with your code
-    return false;
-}
+    flight_t * pointer = src->start_flight;
+    int result = 0;
+    int * best_cost = 0;
+    timeHM_t * best_arrival;
+    if (src != NULL && dst != NULL) {
+      while (pointer->next_flight != NULL) {
+        if (strcmp(pointer->destination_name, dst->airport_name) == 0 && isAfter(&pointer->departure, now)) {
+          departure = &pointer->departure;
+          arrival = &pointer->arrival;
+          cost = &pointer->cost_of_flight;
+          result = 1;
+          if (best_cost == 0) {
+            best_cost = cost;
+          } else if (best_cost > cost) {
+            best_cost = cost;
+          } else if (best_cost == cost) {
+            if (best_arrival == NULL) {
+                best_arrival = arrival;
+            } else if (isAfter(best_arrival, arrival)) {
+             best_arrival = arrival;
+             best_cost = cost;
+            }
+          }
+        }
+        pointer = pointer->next_flight;
+      }
+    }
+    return (result == 1);
+  }
