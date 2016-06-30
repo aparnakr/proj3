@@ -46,7 +46,8 @@ static void allocation_failed() {
  */
 flightSys_t* createSystem() {
     // Replace this line with your code
-    flightSys_t * new_flight_sys = (flightSys_t *) malloc(sizeof(flightSys_t *));
+  //printf("A\n");
+    flightSys_t * new_flight_sys = (flightSys_t *) malloc(sizeof(flightSys_t ));
     if(new_flight_sys == NULL){
       allocation_failed();
     }
@@ -61,6 +62,27 @@ flightSys_t* createSystem() {
  */
 void deleteSystem(flightSys_t* s) {
     // Replace this line with your code
+ /* if(s != NULL){
+    while(s->start_airport != NULL){
+      airport_t * airport_pointer = s->start_airport;
+      //free all the schedules of an airport
+      while(airport_pointer->start_flight!= NULL){
+        free(airport_pointer->start_flight->destination_name);
+        airport_pointer->start_flight->destination_name = NULL;
+        flight_t * flight_pointer = airport_pointer->start_flight;
+        airport_pointer->start_flight = flight_pointer->next_flight;
+        free(flight_pointer);
+        flight_pointer = NULL;
+      }
+      free(airport_pointer->airport_name);
+      airport_pointer->airport_name = NULL;
+      s->start_airport = airport_pointer->next_airport;
+      free(airport_pointer);
+    }
+    free(s);
+    s = NULL;
+  }*/
+
 }
 
 
@@ -70,19 +92,27 @@ void deleteSystem(flightSys_t* s) {
  */
 void addAirport(flightSys_t* s, char* name) {
     // Replace this line with your code
-  if(s!= NULL){
-    airport_t * new_airport = (airport_t *) malloc(sizeof(airport_t *));
+  //printf("B\n");
+if(s!= NULL && name != NULL){
+    airport_t * new_airport = (airport_t *) malloc(sizeof(airport_t));
     if(new_airport == NULL){
         allocation_failed();
     }
-    new_airport->airport_name = malloc(sizeof(name) + 1);
+    //possible segfault?
+    new_airport->airport_name = malloc((strlen(name) + 1)* sizeof(char));
     new_airport->start_flight = NULL;
+    if(new_airport->airport_name == NULL){
+      free(new_airport);
+      allocation_failed();
+    }
     strcpy(new_airport->airport_name, name);
     airport_t * pointer = s->start_airport;
+
     if(pointer == NULL){
       s->start_airport = new_airport;
+      new_airport->next_airport = NULL;
     }else{
-      while(pointer->next_airport!=NULL){
+        while(pointer->next_airport != NULL){
         pointer = pointer->next_airport;
       }
       pointer->next_airport = new_airport;
@@ -99,7 +129,8 @@ void addAirport(flightSys_t* s, char* name) {
 
 airport_t* getAirport(flightSys_t* s, char* name) {
     // Replace this line with your code
-    if(s != NULL && name != NULL){
+  //printf("c\n");
+ /*   if(s != NULL && name != NULL){
         airport_t * pointer = s->start_airport;
         while(pointer != NULL){
           if(strcmp(pointer->airport_name, name) == 0){
@@ -107,7 +138,8 @@ airport_t* getAirport(flightSys_t* s, char* name) {
           }
           pointer = pointer->next_airport;
         }
-    }
+    }*/
+       // printf("got here fine\n");
     return NULL;
 }
 
@@ -119,6 +151,7 @@ airport_t* getAirport(flightSys_t* s, char* name) {
  */
 void printAirports(flightSys_t* s) {
     // Replace this line with your code
+  //printf("D\n");
   if(s != NULL){
     airport_t * pointer = s->start_airport;
     while(pointer != NULL){
@@ -127,6 +160,7 @@ void printAirports(flightSys_t* s) {
       pointer = pointer->next_airport;
     }
   }
+  printf("got here fine\n");
 }
 
 
@@ -135,6 +169,36 @@ void printAirports(flightSys_t* s) {
  */
 void addFlight(airport_t* src, airport_t* dst, timeHM_t* departure, timeHM_t* arrival, int cost) {
     // Replace this line with your code
+
+  /* if (src != NULL && dst != NULL) {
+      flight_t * new_flight = (flight_t *) malloc(sizeof(flight_t));
+      if(new_flight == NULL){
+        allocation_failed();
+      }
+      new_flight->destination_name = malloc(sizeof(dst->airport_name) + 1);
+      //new_flight->departure = malloc(sizeof(departure));
+      //new_flight->arrival = malloc(sizeof(arrival));
+      //new_flight->cost_of_flight = malloc(sizeof(cost));
+      if(new_flight->destination_name == NULL){
+        allocation_failed();
+      }
+      strcpy(new_flight->destination_name, dst->airport_name);
+      new_flight->departure = * departure;
+      new_flight->arrival = * arrival;
+      new_flight->cost_of_flight = cost;
+      flight_t * pointer = src->start_flight;
+      if (pointer == NULL) {
+        //printf("got so far \n");
+        src->start_flight = new_flight;
+        new_flight->next_flight = NULL;
+      } else {
+       // printf("got so far \n");
+        while (pointer->next_flight != NULL) {
+          pointer = pointer->next_flight;
+      }
+      pointer->next_flight = new_flight;
+      }
+    }*/
 }
 
 
@@ -150,17 +214,20 @@ void addFlight(airport_t* src, airport_t* dst, timeHM_t* departure, timeHM_t* ar
  */
 void printSchedule(airport_t* s) {
     // Replace this line with your code
-    if(s != NULL){
+  /* if(s != NULL){
     flight_t * pointer = s->start_flight;
-    printf("%s \n",s->airport_name);
+    printf("AIRPORT: %s \n",s->airport_name);
     while(pointer != NULL){
       printf("%s ",pointer->destination_name);
       printTime(&pointer->departure);
+      printf(" ");
       printTime(&pointer->arrival);
-      printf("%d \n",pointer->cost_of_flight);
+      printf(" ");
+      printf("$%d \n",pointer->cost_of_flight);
       pointer = pointer->next_flight;
     }
-  }
+      
+  }*/
 
 }
 
