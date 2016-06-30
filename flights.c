@@ -197,10 +197,8 @@ void addFlight(airport_t* src, airport_t* dst, timeHM_t* departure, timeHM_t* ar
 }
 /*
    Prints the schedule of flights of the given airport.
-
    Prints the airport name on the first line, then prints a schedule entry on each 
    line that follows, with the format: "destination_name departure_time arrival_time $cost_of_flight".
-
    You should use printTime (look in timeHM.h) to print times, and the order should be the same as 
    the order they were added in through addFlight. Make sure to end with a new line.
    You should compare your output with the correct output in flights.out to make sure your formatting is correct.
@@ -229,38 +227,34 @@ void printSchedule(airport_t* s) {
    Given a src and dst airport, and the time now, finds the next flight to take based on the following rules:
    1) Finds the cheapest flight from src to dst that departs after now.
    2) If there are multiple cheapest flights, take the one that arrives the earliest.
-
    If a flight is found, you should store the flight's departure time, arrival time, and cost in departure, arrival, 
    and cost params and return true. Otherwise, return false. 
-
    Please use the function isAfter() from time.h when comparing two timeHM_t objects.
  */
 bool getNextFlight(airport_t* src, airport_t* dst, timeHM_t* now, timeHM_t* departure, timeHM_t* arrival, int* cost) {
     flight_t * pointer = src->start_flight;
+    flight_t * best_flight = NULL;
     int result = 0;
-    int * best_cost = 0;
-    timeHM_t * best_arrival;
     if (src != NULL && dst != NULL) {
-      while (pointer->next_flight != NULL) {
+      while (pointer != NULL) {
         if (strcmp(pointer->destination_name, dst->airport_name) == 0 && isAfter(&pointer->departure, now)) {
-          departure = &pointer->departure;
-          arrival = &pointer->arrival;
-          cost = &pointer->cost_of_flight;
           result = 1;
-          if (best_cost == 0) {
-            best_cost = cost;
-          } else if (best_cost > cost) {
-            best_cost = cost;
-          } else if (best_cost == cost) {
-            if (best_arrival == NULL) {
-                best_arrival = arrival;
-            } else if (isAfter(best_arrival, arrival)) {
-             best_arrival = arrival;
-             best_cost = cost;
+          if (best_flight == NULL) {
+            best_flight = pointer;
+          } else if (best_flight->cost_of_flight > pointer->cost_of_flight) {
+            best_flight = pointer;
+          } else if (best_flight->cost_of_flight == pointer->cost_of_flight) {
+            if (isAfter(&best_flight->arrival, &pointer->arrival)) {
+             best_flight = pointer;
             }
           }
         }
         pointer = pointer->next_flight;
+      }
+      if (best_flight != NULL) {
+      * departure = (best_flight->departure);
+      * arrival = (best_flight->arrival);
+      * cost = (best_flight->cost_of_flight);
       }
     }
     return (result == 1);
