@@ -62,7 +62,7 @@ flightSys_t* createSystem() {
  */
 void deleteSystem(flightSys_t* s) {
     // Replace this line with your code
- /* if(s != NULL){
+  if(s != NULL){
     while(s->start_airport != NULL){
       airport_t * airport_pointer = s->start_airport;
       //free all the schedules of an airport
@@ -81,7 +81,7 @@ void deleteSystem(flightSys_t* s) {
     }
     free(s);
     s = NULL;
-  }*/
+  }
 
 }
 

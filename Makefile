@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CC = gcc 
 CFLAGS = -Wall -g -std=c99
 
@@ -17,3 +18,8 @@ flights-memcheck:	RouteTime
 
 clean:
 	rm -rf timeHM.o flights.o RouteTime.o RouteTime RouteTime.dSYM
+=======
+p1:
+	cp alu.circ regfile.circ tests
+	cd tests && python ./sanity_test.py | tee ../TEST_LOG
+>>>>>>> proj3-starter/master

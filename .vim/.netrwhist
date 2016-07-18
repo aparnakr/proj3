@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/cc/cs61c/su16/class/cs61c-ck/Desktop/cs61c/mini-bio.txt'
+let g:netrw_dirhist_2='/home/cc/cs61c/su16/class/cs61c-ck/Desktop/cs61c'
+let g:netrw_dirhist_3='/home/cc/cs61c/su16/class/cs61c-ck/Desktop/cs61c/mini-bio.txt'

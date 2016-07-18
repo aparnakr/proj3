@@ -1,0 +1,31 @@
+break main
+break hello.c:8
+run hello.c
+continue
+continue
+quit
+break main
+step
+run ll_equal.c
+step
+step
+step
+continue
+break ll_equal.c:29
+run ll_equal.c
+yes
+continue
+break ll_equal.c:34
+continue
+stepi
+display
+stepi
+next
+vim ll_equal.c
+cim ll_equal
+vim ll_equal
+quit
+y
+run hello
+run 
+quit
